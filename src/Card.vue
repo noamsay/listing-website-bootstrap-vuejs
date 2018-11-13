@@ -47,7 +47,7 @@ export default {
             var app_id = "app838WoUK7gksAto";
             var app_key = "key4hPsF3lTzceL6g";
             axios.get(
-                "https://api.airtable.com/v0/"+app_id+"/Weekly%20Report?maxRecords=20&view=Main%20View",
+                "https://api.airtable.com/v0/"+app_id+"/Weekly%20Report?maxRecords=50&view=Main%20View",
                 {
                     headers: { Authorization: "Bearer "+app_key }
                 }
