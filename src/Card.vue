@@ -33,9 +33,13 @@ export default {
   data() {
     return {
         id: null,
-        listings: [],
-        currentListing: null
+        listings: []
     };
+  },
+  computed: {
+      currentListing() {
+          return this.listings[this.listings.findIndex(x => x.id === this.id)];
+      }
   },
   mounted() {
       this.id = this.$route.params.id;
@@ -54,15 +58,14 @@ export default {
             ).then(function(response){
                 console.log(response.data.records);
                 self.listings = response.data.records;
-                self.currentListing = self.listings[self.listings.findIndex(x => x.id == self.id)];
             }).catch(function(error){
                 console.log(error)
             });
         
       },
       getImageUrl(){
-        if(this.currentListing.fields.Attachment)
-            return this.currentListing.Attachment[0].thumbnails.large.url
+        if(this.currentListing.fields.Attachment !== null)
+            return this.currentListing.fields.Attachment[0].thumbnails.large.url
         else
             return 'https://picsum.photos/600/300/?image=25'
     },
