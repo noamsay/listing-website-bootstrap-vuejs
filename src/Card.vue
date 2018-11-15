@@ -1,6 +1,6 @@
 <template>
   <div>
-      <b-container>
+      <b-container v-if="currentListing">
           <b-row>
               <b-col>
                   <h1>
@@ -10,7 +10,7 @@
           </b-row>
           <b-row>
               <b-col sm="8">
-                   <b-img :src="getImageUrl()" fluid alt="Responsive image" />
+                   <b-img :src="imageURL" fluid alt="Responsive image" />
               </b-col>
               <b-col sm="4">
                   <h1>Description</h1>
@@ -38,7 +38,14 @@ export default {
   },
   computed: {
       currentListing() {
-          return this.listings[this.listings.findIndex(x => x.id === this.id)];
+        return this.listings[this.listings.findIndex(x => x.id === this.id)];
+      },
+      imageURL() {
+        if(this.currentListing)
+            if(this.currentListing.fields.Attachment)
+                return this.currentListing.fields.Attachment[0].thumbnails.large.url
+        return 'https://picsum.photos/600/300/?image=25'
+
       }
   },
   mounted() {
@@ -63,12 +70,6 @@ export default {
             });
         
       },
-      getImageUrl(){
-        if(this.currentListing.fields.Attachment !== null)
-            return this.currentListing.fields.Attachment[0].thumbnails.large.url
-        else
-            return 'https://picsum.photos/600/300/?image=25'
-    },
   }
 };
 </script>
