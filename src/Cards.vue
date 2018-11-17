@@ -3,7 +3,7 @@
       <b-container>
         <b-row>
           <b-col sm="12">
-            <filters @searched="searchIt" @topicSelected="topicSelected" @dateFilter="dateFilter"></filters>
+            <filters @searched="searchIt" @topicSelected="topicSelected" @dateFilter="dateFilter" @lensSelected="selectLens" @publicationSelected="selectPublication"></filters>
           </b-col>
         </b-row>
         <b-row>
@@ -53,6 +53,8 @@ export default {
       searchQuery: '',
       selectedTopics: [],
       datefilter: 'accending',
+      lensFilter: null,
+      publicationFilter: null,
     };
   },
   computed: {
@@ -73,6 +75,13 @@ export default {
       if(this.selectedTopics.length > 0) {
         filtered = filtered.filter(x => x.fields.Type && x.fields.Type.some(r => this.selectedTopics.includes(r.toLowerCase())));
       }
+      if(this.lensFilter !== null) {
+        filtered = filtered.filter(x => x.fields['Lens-str'] === this.lensFilter);
+      }
+      
+      if(this.publicationFilter !== null) {
+        filtered = filtered.filter(x => x.fields['Publication'].includes(this.publicationFilter));
+      }
       return filtered;
     }
   },
@@ -88,6 +97,12 @@ export default {
     },
     dateFilter (filter) {
       this.datefilter = filter;
+    },
+    selectLens(lens) {
+      this.lensFilter = lens;
+    },
+    selectPublication(publication) {
+      this.publicationFilter = publication;
     },
     loadListings(){
       var self = this;
