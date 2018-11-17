@@ -11,9 +11,10 @@
               </b-col>
           </b-row>
           <br>
+          <h3>Type</h3>
           <b-row>
               <b-col sm="12">
-                <b-form-group label="Type">
+                <b-form-group>
                     <b-row>
                         <b-col v-for="(topic, i) in availableTopics" :key="i">
                             <input type="checkbox" :value="topic.value" v-model="selectedTopics"> {{topic.text}}
@@ -23,6 +24,7 @@
               </b-col>
           </b-row>
           <br>
+          <h3>Date</h3>
           <b-row>
               <b-col>
                 <input type="radio" value="accending" v-model="dateFilter">
