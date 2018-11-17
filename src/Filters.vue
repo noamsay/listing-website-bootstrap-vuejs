@@ -57,6 +57,7 @@
 </template>
 
 <script>
+import axios from 'axios';
 export default {
   name: "filters",
   data() {
@@ -70,16 +71,10 @@ export default {
         { text: "Audio/Visual", value: "audio/Visual" }
       ],
       availableLens: [
-        { value: null, text: 'Please select an option' },
-        { value: '12', text: 'Second' },
-        { value: '34', text: 'Third' },
-        { value: '56', text: 'Fourth' },
+        { value: null, text: 'Please select a lense' },
       ],
       availablePublications: [
         { value: null, text: 'Please select a publication' },
-        { value: '12', text: 'Second' },
-        { value: '34', text: 'Third' },
-        { value: '56', text: 'Fourth' },
       ],
       selectedTopics: [],
       dateFilter: "accending",
@@ -87,7 +82,47 @@ export default {
       selectedPublication: null,
     };
   },
-  methods: {},
+  mounted() {
+    this.getLenses();
+    this.getPublications();
+  },
+  methods: {
+    getLenses(){
+      var self = this;
+      var app_id = "app838WoUK7gksAto";
+      var app_key = "key4hPsF3lTzceL6g";
+      axios.get(
+          "https://api.airtable.com/v0/"+app_id+"/Lenses",
+          {
+              headers: { Authorization: "Bearer "+app_key }
+          }
+      ).then(function(response){
+        response.data.records.forEach(element => {
+          self.availableLens.push({text: element.fields.Name, value: element.fields.Name})
+        });
+      }).catch(function(error){
+        console.log(error)
+      });
+    },
+    getLenses(){
+      var self = this;
+      var app_id = "app838WoUK7gksAto";
+      var app_key = "key4hPsF3lTzceL6g";
+      axios.get(
+          "https://api.airtable.com/v0/"+app_id+"/Sources",
+          {
+              headers: { Authorization: "Bearer "+app_key }
+          }
+      ).then(function(response){
+        console.log(response.data.records);
+        response.data.records.forEach(element => {
+          self.availablePublications.push({text: element.fields.Name, value: element.id})
+        });
+      }).catch(function(error){
+        console.log(error)
+      });
+    },
+  },
   watch: {
     searchText() {
       this.$emit("searched", this.searchText);
