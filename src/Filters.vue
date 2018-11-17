@@ -64,11 +64,6 @@ export default {
     return {
       searchText: "",
       availableTopics: [
-        { text: "New", value: "new" },
-        { text: "Analysis", value: "analysis" },
-        { text: "Report", value: "report" },
-        { text: "Opinion", value: "opinion" },
-        { text: "Audio/Visual", value: "audio/Visual" }
       ],
       availableLens: [
         { value: null, text: 'Please select a lense' },
@@ -85,6 +80,7 @@ export default {
   mounted() {
     this.getLenses();
     this.getPublications();
+    this.getTypes();
   },
   methods: {
     getLenses(){
@@ -98,7 +94,7 @@ export default {
           }
       ).then(function(response){
         response.data.records.forEach(element => {
-          self.availableLens.push({text: element.fields.Name, value: element.fields.Name})
+          self.availavailableTopics.push({text: element.fields.Name, value: element.fields.Name})
         });
       }).catch(function(error){
         console.log(error)
@@ -122,6 +118,24 @@ export default {
         console.log(error)
       });
     },
+    getTypes(){
+      var self = this;
+      var app_id = "app838WoUK7gksAto";
+      var app_key = "key4hPsF3lTzceL6g";
+      axios.get(
+          "https://api.airtable.com/v0/"+app_id+"/Type",
+          {
+              headers: { Authorization: "Bearer "+app_key }
+          }
+      ).then(function(response){
+        console.log(response.data.records);
+        response.data.records.forEach(element => {
+          self.availableTopics.push({text: element.fields.Name, value: element.id})
+        });
+      }).catch(function(error){
+        console.log(error)
+      });
+    }
   },
   watch: {
     searchText() {
