@@ -28,6 +28,9 @@
                           <li>
                             {{listing.fields['Publication'].join(', ')}}
                           </li>
+                          <li>
+                            {{listing.fields['Date Added']}}
+                          </li>
                         </ul>
                       </b-col>
                     </b-row>
@@ -41,7 +44,6 @@
 <script>
 import axios from 'axios';
 import Filters from './Filters.vue';
-import moment from 'moment'
 export default {
   name: "Cards",
   components: {Filters},
@@ -58,11 +60,11 @@ export default {
       let filtered = this.listings;
       if(this.datefilter === 'accending'){
         filtered = filtered.sort((a,b) => {
-          return moment(a.fields['Date Added']) > moment(b.fields['Date Added']);
+          return new Date(a.fields['Date Added']) - new Date(b.fields['Date Added']);
         });
       }else if(this.datefilter === 'decending'){
         filtered = filtered.sort((a,b) => {
-          return moment(a.fields['Date Added']) < moment(b.fields['Date Added']);
+          return new Date(b.fields['Date Added']) - new Date(a.fields['Date Added']);
         });
       }
       if(this.searchQuery.length > 0) {
