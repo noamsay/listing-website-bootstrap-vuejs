@@ -8,7 +8,7 @@
         </b-row>
         <b-row>
             <b-col sm="4" v-for="(listing, i) in filteredListings" :key="i" @click="openListing(i)">
-                <b-card :title="listing.fields['Title/Topic'].substring(0,20)"
+                <b-card :title="listing.fields['Title/Topic']"
                     :img-src="getImageUrl(i)"
                     img-alt="Image"
                     img-top
@@ -16,7 +16,7 @@
                     style="max-width: 20rem;"
                     class="mb-2">
                     <p class="card-text">
-                        {{listing.fields.Clipping.substring(0, 50)}}
+                        {{listing.fields.Clipping.split(' ').slice(0, 20).join(' ') + ' ...'}}
                     </p>
                 </b-card>
             </b-col>
