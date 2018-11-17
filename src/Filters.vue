@@ -104,7 +104,7 @@ export default {
         console.log(error)
       });
     },
-    getLenses(){
+    getPublications(){
       var self = this;
       var app_id = "app838WoUK7gksAto";
       var app_key = "key4hPsF3lTzceL6g";
