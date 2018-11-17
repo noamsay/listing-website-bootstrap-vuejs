@@ -18,6 +18,19 @@
                     <p class="card-text">
                         {{listing.fields.Clipping.split(' ').slice(0, 20).join(' ') + ' ...'}}
                     </p>
+                    <b-row>
+                      <b-col sm="2"></b-col>
+                      <b-col>
+                        <ul>
+                          <li>
+                            {{listing.fields['Lens-str']}}
+                          </li>
+                          <li>
+                            {{listing.fields['Publication'].join(', ')}}
+                          </li>
+                        </ul>
+                      </b-col>
+                    </b-row>
                 </b-card>
             </b-col>
         </b-row>
