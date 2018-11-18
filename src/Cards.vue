@@ -52,7 +52,7 @@ export default {
       listings: [],
       searchQuery: '',
       selectedTopics: [],
-      datefilter: 'accending',
+      datefilter: 'decending',
       lensFilter: null,
       publicationFilter: null,
     };

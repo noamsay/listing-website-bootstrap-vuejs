@@ -44,12 +44,12 @@
           <h3>Date</h3>
           <b-row>
               <b-col>
-                <input type="radio" value="accending" v-model="dateFilter">
-                <label for="accending"> Accending</label>
+                <input type="radio" value="decending" v-model="dateFilter">
+                <label for="decending"> Descending</label>
               </b-col>
               <b-col>
-                <input type="radio" value="decending" v-model="dateFilter">
-                <label for="decending"> Decending</label>
+                <input type="radio" value="accending" v-model="dateFilter">
+                <label for="accending"> Ascending</label>
               </b-col>
           </b-row>
       <br><br>
@@ -72,7 +72,7 @@ export default {
         { value: null, text: 'Please select a publication' },
       ],
       selectedTopics: [],
-      dateFilter: "accending",
+      dateFilter: "decending",
       selectedLens: null,
       selectedPublication: null,
     };
