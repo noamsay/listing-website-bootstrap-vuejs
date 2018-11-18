@@ -3,12 +3,12 @@
       <b-container>
         <b-row>
           <b-col sm="12">
-            <filters @searched="searchIt" @topicSelected="topicSelected" @dateFilter="dateFilter"></filters>
+            <filters @searched="searchIt" @topicSelected="topicSelected" @dateFilter="dateFilter" @lensSelected="selectLens" @publicationSelected="selectPublication"></filters>
           </b-col>
         </b-row>
         <b-row>
             <b-col sm="4" v-for="(listing, i) in filteredListings" :key="i" @click="openListing(i)">
-                <b-card :title="listing.fields['Title/Topic'].substring(0,20)"
+                <b-card :title="listing.fields['Title/Topic']"
                     :img-src="getImageUrl(i)"
                     img-alt="Image"
                     img-top
@@ -16,8 +16,24 @@
                     style="max-width: 20rem;"
                     class="mb-2">
                     <p class="card-text">
-                        {{listing.fields.Clipping.substring(0, 50)}}
+                        {{listing.fields.Clipping.split(' ').slice(0, 20).join(' ') + ' ...'}}
                     </p>
+                    <b-row>
+                      <b-col sm="2"></b-col>
+                      <b-col>
+                        <ul>
+                          <li>
+                            {{listing.fields['Lens-str']}}
+                          </li>
+                          <li>
+                            {{listing.fields['Publication'].join(', ')}}
+                          </li>
+                          <li>
+                            {{listing.fields['Date Added']}}
+                          </li>
+                        </ul>
+                      </b-col>
+                    </b-row>
                 </b-card>
             </b-col>
         </b-row>
@@ -28,7 +44,6 @@
 <script>
 import axios from 'axios';
 import Filters from './Filters.vue';
-import moment from 'moment'
 export default {
   name: "Cards",
   components: {Filters},
@@ -38,6 +53,8 @@ export default {
       searchQuery: '',
       selectedTopics: [],
       datefilter: 'accending',
+      lensFilter: null,
+      publicationFilter: null,
     };
   },
   computed: {
@@ -45,11 +62,11 @@ export default {
       let filtered = this.listings;
       if(this.datefilter === 'accending'){
         filtered = filtered.sort((a,b) => {
-          return moment(a.fields['Date Added']) > moment(b.fields['Date Added']);
+          return new Date(a.fields['Date Added']) - new Date(b.fields['Date Added']);
         });
       }else if(this.datefilter === 'decending'){
         filtered = filtered.sort((a,b) => {
-          return moment(a.fields['Date Added']) < moment(b.fields['Date Added']);
+          return new Date(b.fields['Date Added']) - new Date(a.fields['Date Added']);
         });
       }
       if(this.searchQuery.length > 0) {
@@ -57,6 +74,13 @@ export default {
       }
       if(this.selectedTopics.length > 0) {
         filtered = filtered.filter(x => x.fields.Type && x.fields.Type.some(r => this.selectedTopics.includes(r.toLowerCase())));
+      }
+      if(this.lensFilter !== null) {
+        filtered = filtered.filter(x => x.fields['Lens-str'] === this.lensFilter);
+      }
+      
+      if(this.publicationFilter !== null) {
+        filtered = filtered.filter(x => x.fields['Publication'].includes(this.publicationFilter));
       }
       return filtered;
     }
@@ -73,6 +97,12 @@ export default {
     },
     dateFilter (filter) {
       this.datefilter = filter;
+    },
+    selectLens(lens) {
+      this.lensFilter = lens;
+    },
+    selectPublication(publication) {
+      this.publicationFilter = publication;
     },
     loadListings(){
       var self = this;

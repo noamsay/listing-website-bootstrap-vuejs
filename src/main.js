@@ -7,7 +7,6 @@ import "bootstrap/dist/css/bootstrap.min.css"
 import "bootstrap-vue/dist/bootstrap-vue.css"
 Vue.use(Router)
 Vue.use(BootstrapVue)
-Vue.use(require('vue-moment'));
 
 new Vue({
   el: '#app',
