@@ -12,16 +12,23 @@
               <b-col sm="8">
                    <b-img :src="imageURL" fluid alt="Responsive image" />
               </b-col>
-              <b-col sm="4">
+          </b-row>
+          <b-row>
+              <b-col sm="8">
                   <h1>Description</h1>
                   <p>{{currentListing.fields.Clipping}}</p>
                   <ul>
-                      <li>{{currentListing.fields['Date Added']}}</li>
-                      <li>{{currentListing.fields['Lens-str']}}</li>
-                      <li>{{currentListing.fields['Link 1']}}</li>
+                      <li>Date Added: {{currentListing.fields['Date Added']}}</li>
+                      <li>Lense: {{currentListing.fields['Lens-str']}}</li>
+                      <li>Link: {{currentListing.fields['Link 1']}}</li>
                   </ul>
               </b-col>
           </b-row>
+          <b-row>
+            <b-col sm="8">
+            </b-col>
+          </b-row>
+
       </b-container>
   </div>
 </template>
@@ -68,7 +75,7 @@ export default {
             }).catch(function(error){
                 console.log(error)
             });
-        
+
       },
   }
 };
