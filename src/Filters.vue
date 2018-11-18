@@ -94,7 +94,7 @@ export default {
           }
       ).then(function(response){
         response.data.records.forEach(element => {
-          self.availavailableTopics.push({text: element.fields.Name, value: element.fields.Name})
+          self.availableLens.push({text: element.fields.Name, value: element.fields.Name})
         });
       }).catch(function(error){
         console.log(error)
