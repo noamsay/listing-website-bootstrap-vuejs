@@ -26,7 +26,7 @@
                             {{listing.fields['Lens-str']}}
                           </li>
                           <li>
-                            {{listing.fields['Publication'].join(', ')}}
+                            {{listing.fields['Publication-str']}}
                           </li>
                           <li>
                             {{listing.fields['Date Added']}}
@@ -78,7 +78,7 @@ export default {
       if(this.lensFilter !== null) {
         filtered = filtered.filter(x => x.fields['Lens-str'] === this.lensFilter);
       }
-      
+
       if(this.publicationFilter !== null) {
         filtered = filtered.filter(x => x.fields['Publication'].includes(this.publicationFilter));
       }
