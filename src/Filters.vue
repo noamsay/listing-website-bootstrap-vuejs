@@ -130,7 +130,7 @@ export default {
       ).then(function(response){
         console.log(response.data.records);
         response.data.records.forEach(element => {
-          self.availableTopics.push({text: element.fields.Name, value: element.id})
+          self.availableTopics.push({text: element.fields.Name, value: element.fields.Name})
         });
       }).catch(function(error){
         console.log(error)
